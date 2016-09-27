@@ -1,0 +1,315 @@
+SQL> INSERT INTO JEDNOSTKI_ORGANIZACYJNE (KOD_ORGANIZACJI, NAZWA)
+VALUES ('3','Analityka');
+
+1 row inserted.
+
+SQL> SELECT *
+FROM JEDNOSTKI_ORGANIZACYJNE;
+
+KOD_ORGANI NAZWA      KOD_ORG_NA
+---------- ---------- ----------
+1          Kierowanie           
+2          Finansy    1         
+3          Analityka            
+
+SQL> INSERT INTO STANOWISKA (KOD_STANOWISKA, NAZWA, STATUS)
+VALUES ('6','Zastepca ksiegowej', 'Tak');
+
+1 row inserted.
+
+SQL> SELECT *
+FROM STANOWISKA;
+
+KOD_STAN NAZWA                          STATUS   
+-------- ------------------------------ ----------
+1        Kierownik                      Tak       
+2        Doradca personalny             Tak       
+3        Specjalista ds. personalnych   Tak       
+4        Ksiegowa                       Tak       
+5        Sekretarka                     Tak       
+6        Zastepca ksiegowej             Tak       
+
+ 6 rows selected 
+
+SQL> INSERT INTO PRACOWNICY (ID_PRACOWNIKA, NAZWISKO, IMIE, PESEL)
+VALUES ('6','TOMASZEWSKA', 'Joanna', '14099575663');
+
+1 row inserted.
+
+SQL> SELECT *
+FROM PRACOWNICY;
+
+ID_PRACOWNIKA NAZWISKO             IMIE            PESEL     
+------------- -------------------- --------------- -----------
+            1 NOWAKOWSKA           Anna            12018672123
+            2 KOWALSKI             Jakub           22117675163
+            3 WISNIEWSKI           Jan             15068572129
+            4 WOZNIAK              Kamila          26087072459
+            5 MAZUR                Karolina        19036979129
+            6 TOMASZEWSKA          Joanna          14099575663
+
+ 6 rows selected 
+
+SQL> INSERT INTO STANOWISKA_PRACOWNIKOW (KOD_ORGANIZACJI, KOD_STANOWISKA, ID_PRACOWNIKA, DATA_ROZPOCZECIA)
+VALUES ('2','6','6',TO_DATE('16/01/24','YY/MM/DD'));
+
+1 row inserted.
+
+SQL> SELECT *
+FROM STANOWISKA_PRACOWNIKOW;
+
+KOD_ORGANI KOD_STAN ID_PRACOWNIKA DATA_ROZPOCZECIA DATA_ZAKONCZENIA
+---------- -------- ------------- ---------------- ----------------
+1          1                    1 14/11/19                         
+1          2                    2 14/11/25                         
+1          3                    3 14/12/02                         
+2          4                    4 15/01/13                         
+2          5                    5 15/04/18                         
+2          6                    6 16/01/24                         
+
+ 6 rows selected 
+
+SQL> UPDATE PRACOWNICY
+SET IMIE='Kasia'
+WHERE ID_PRACOWNIKA='6';
+
+1 row updated.
+
+SQL> SELECT *
+FROM PRACOWNICY;
+
+ID_PRACOWNIKA NAZWISKO             IMIE            PESEL     
+------------- -------------------- --------------- -----------
+            1 NOWAKOWSKA           Anna            12018672123
+            2 KOWALSKI             Jakub           22117675163
+            3 WISNIEWSKI           Jan             15068572129
+            4 WOZNIAK              Kamila          26087072459
+            5 MAZUR                Karolina        19036979129
+            6 TOMASZEWSKA          Kasia           14099575663
+
+ 6 rows selected 
+
+SQL> UPDATE STANOWISKA
+SET NAZWA='Zastepca'
+WHERE KOD_STANOWISKA='6';
+
+1 row updated.
+
+SQL> SELECT *
+FROM STANOWISKA;
+
+KOD_STAN NAZWA                          STATUS   
+-------- ------------------------------ ----------
+1        Kierownik                      Tak       
+2        Doradca personalny             Tak       
+3        Specjalista ds. personalnych   Tak       
+4        Ksiegowa                       Tak       
+5        Sekretarka                     Tak       
+6        Zastepca                       Tak       
+
+ 6 rows selected 
+
+SQL> DELETE FROM STANOWISKA_PRACOWNIKOW
+WHERE KOD_ORGANIZACJI='2' AND KOD_STANOWISKA='6' AND ID_PRACOWNIKA='6';
+
+1 row deleted.
+
+SQL> SELECT *
+FROM STANOWISKA_PRACOWNIKOW;
+
+KOD_ORGANI KOD_STAN ID_PRACOWNIKA DATA_ROZPOCZECIA DATA_ZAKONCZENIA
+---------- -------- ------------- ---------------- ----------------
+1          1                    1 14/11/19                         
+1          2                    2 14/11/25                         
+1          3                    3 14/12/02                         
+2          4                    4 15/01/13                         
+2          5                    5 15/04/18                         
+
+SQL> DELETE FROM STANOWISKA
+WHERE KOD_STANOWISKA='6';
+
+1 row deleted.
+
+SQL> SELECT *
+FROM STANOWISKA;
+
+KOD_STAN NAZWA                          STATUS   
+-------- ------------------------------ ----------
+1        Kierownik                      Tak       
+2        Doradca personalny             Tak       
+3        Specjalista ds. personalnych   Tak       
+4        Ksiegowa                       Tak       
+5        Sekretarka                     Tak       
+
+SQL> DELETE FROM PRACOWNICY
+WHERE ID_PRACOWNIKA='6';
+
+1 row deleted.
+
+SQL> SELECT *
+FROM PRACOWNICY;
+
+ID_PRACOWNIKA NAZWISKO             IMIE            PESEL     
+------------- -------------------- --------------- -----------
+            1 NOWAKOWSKA           Anna            12018672123
+            2 KOWALSKI             Jakub           22117675163
+            3 WISNIEWSKI           Jan             15068572129
+            4 WOZNIAK              Kamila          26087072459
+            5 MAZUR                Karolina        19036979129
+
+SQL> DELETE FROM JEDNOSTKI_ORGANIZACYJNE
+WHERE KOD_ORGANIZACJI='3';
+
+1 row deleted.
+
+SQL> SELECT *
+FROM JEDNOSTKI_ORGANIZACYJNE;
+
+KOD_ORGANI NAZWA      KOD_ORG_NA
+---------- ---------- ----------
+1          Kierowanie           
+2          Finansy    1         
+
+SQL> --Proba wstawienia nazwy jednostki organizacji wiecej niz 10
+SQL> INSERT INTO JEDNOSTKI_ORGANIZACYJNE (KOD_ORGANIZACJI, NAZWA)
+VALUES ('1','Zarzadzanie personelem');
+
+Error starting at line : 71 in command -
+INSERT INTO JEDNOSTKI_ORGANIZACYJNE (KOD_ORGANIZACJI, NAZWA)
+VALUES ('1','Zarzadzanie personelem')
+Error report -
+SQL Error: ORA-12899: wartoœæ zbyt du¿a dla kolumny "BD2A37"."JEDNOSTKI_ORGANIZACYJNE"."NAZWA" (obecna: 22, maksymalna: 10)
+12899. 00000 -  "value too large for column %s (actual: %s, maximum: %s)"
+*Cause:    An attempt was made to insert or update a column with a value
+           which is too wide for the width of the destination column.
+           The name of the column is given, along with the actual width
+           of the value, and the maximum allowed width of the column.
+           Note that widths are reported in characters if character length
+           semantics are in effect for the column, otherwise widths are
+           reported in bytes.
+*Action:   Examine the SQL statement for correctness.  Check source
+           and destination column data types.
+           Either make the destination column wider, or use a subset
+           of the source column (i.e. use substring).
+SQL> SELECT *
+FROM JEDNOSTKI_ORGANIZACYJNE;
+
+KOD_ORGANI NAZWA      KOD_ORG_NA
+---------- ---------- ----------
+1          Kierowanie           
+2          Finansy    1         
+
+SQL> --Proba podania w tabele stanowiska tylko id pracownika,nie jest dozwolone pozostawienie innych kolumn null
+SQL> INSERT INTO STANOWISKA_PRACOWNIKOW (ID_PRACOWNIKA)
+VALUES ('1234567');
+
+Error starting at line : 79 in command -
+INSERT INTO STANOWISKA_PRACOWNIKOW (ID_PRACOWNIKA)
+VALUES ('1234567')
+Error report -
+SQL Error: ORA-01400: nie mo¿na wstawiæ wartoœci NULL do ("BD2A37"."STANOWISKA_PRACOWNIKOW"."KOD_ORGANIZACJI")
+01400. 00000 -  "cannot insert NULL into (%s)"
+*Cause:    An attempt was made to insert NULL into previously listed objects.
+*Action:   These objects cannot accept NULL values.
+SQL> SELECT *
+FROM STANOWISKA_PRACOWNIKOW;
+
+KOD_ORGANI KOD_STAN ID_PRACOWNIKA DATA_ROZPOCZECIA DATA_ZAKONCZENIA
+---------- -------- ------------- ---------------- ----------------
+1          1                    1 14/11/19                         
+1          2                    2 14/11/25                         
+1          3                    3 14/12/02                         
+2          4                    4 15/01/13                         
+2          5                    5 15/04/18                         
+
+SQL> --Sprawdzenie dzialania sequences(dodaje 1)
+SQL> INSERT INTO STANOWISKA (KOD_STANOWISKA, NAZWA, STATUS)
+VALUES (DODAJ1.NEXTVAL,'Specjalista rozliczen', 'Nie');
+
+1 row inserted.
+
+SQL> INSERT INTO STANOWISKA (KOD_STANOWISKA, NAZWA, STATUS)
+VALUES (DODAJ1.NEXTVAL,'Zastepca kierownika', 'Nie');
+
+1 row inserted.
+
+SQL> SELECT *
+FROM STANOWISKA;
+
+KOD_STAN NAZWA                          STATUS   
+-------- ------------------------------ ----------
+1        Kierownik                      Tak       
+2        Doradca personalny             Tak       
+3        Specjalista ds. personalnych   Tak       
+4        Ksiegowa                       Tak       
+5        Sekretarka                     Tak       
+6        Specjalista rozliczen          Nie       
+7        Zastepca kierownika            Nie       
+
+ 7 rows selected 
+
+SQL> DELETE FROM STANOWISKA
+WHERE KOD_STANOWISKA='6';
+
+1 row deleted.
+
+SQL> DELETE FROM STANOWISKA
+WHERE KOD_STANOWISKA='7';
+
+1 row deleted.
+
+SQL> SELECT *
+FROM STANOWISKA;
+
+KOD_STAN NAZWA                          STATUS   
+-------- ------------------------------ ----------
+1        Kierownik                      Tak       
+2        Doradca personalny             Tak       
+3        Specjalista ds. personalnych   Tak       
+4        Ksiegowa                       Tak       
+5        Sekretarka                     Tak       
+
+SQL> --sprawdzenie triggera, ktory nie pozwala usunac stanowisko:kierownik lub ksiegowa
+SQL> DELETE FROM STANOWISKA
+WHERE KOD_STANOWISKA='4';
+
+Error starting at line : 107 in command -
+DELETE FROM STANOWISKA
+WHERE KOD_STANOWISKA='4'
+Error report -
+SQL Error: ORA-20999: Nie mozna usunac!
+ORA-06512: przy "BD2A37.SPRAWDZ_STANOWISKA", linia 3
+ORA-04088: b³¹d w trakcie wykonywania wyzwalacza 'BD2A37.SPRAWDZ_STANOWISKA'
+
+SQL> SELECT *
+FROM STANOWISKA;
+
+KOD_STAN NAZWA                          STATUS   
+-------- ------------------------------ ----------
+1        Kierownik                      Tak       
+2        Doradca personalny             Tak       
+3        Specjalista ds. personalnych   Tak       
+4        Ksiegowa                       Tak       
+5        Sekretarka                     Tak       
+
+SQL> --sprawdzenie triggera, ktory nie pozwala usunac jedn_org:kierowanie lub finansy
+SQL> DELETE FROM JEDNOSTKI_ORGANIZACYJNE
+WHERE KOD_ORGANIZACJI='1';
+
+Error starting at line : 114 in command -
+DELETE FROM JEDNOSTKI_ORGANIZACYJNE
+WHERE KOD_ORGANIZACJI='1'
+Error report -
+SQL Error: ORA-20999: Nie mozna usunac!
+ORA-06512: przy "BD2A37.SPRAWDZ_JEDN_ORG", linia 3
+ORA-04088: b³¹d w trakcie wykonywania wyzwalacza 'BD2A37.SPRAWDZ_JEDN_ORG'
+
+SQL> SELECT *
+FROM JEDNOSTKI_ORGANIZACYJNE;
+
+KOD_ORGANI NAZWA      KOD_ORG_NA
+---------- ---------- ----------
+1          Kierowanie           
+2          Finansy    1         
+
+SQL> spool off

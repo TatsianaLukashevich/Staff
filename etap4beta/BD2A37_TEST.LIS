@@ -1,0 +1,42 @@
+SQL> SELECT NAZWISKO,IMIE
+FROM PRACOWNICY;
+
+NAZWISKO             IMIE          
+-------------------- ---------------
+NOWAKOWSKA           Anna           
+KOWALSKI             Jakub          
+WISNIEWSKI           Jan            
+WOZNIAK              Kamila         
+MAZUR                Karolina       
+
+SQL> SELECT NAZWA
+FROM STANOWISKA;
+
+NAZWA                        
+------------------------------
+Kierownik                     
+Doradca personalny            
+Specjalista ds. personalnych  
+Ksiegowa                      
+Sekretarka                    
+
+SQL> SELECT ID_PRACOWNIKA,DATA_ROZPOCZECIA
+FROM STANOWISKA_PRACOWNIKOW;
+
+ID_PRACOWNIKA DATA_ROZPOCZECIA
+------------- ----------------
+            1 14/11/19        
+            2 14/11/25        
+            3 14/12/02        
+            4 15/01/13        
+            5 15/04/18        
+
+SQL> SELECT KOD_ORGANIZACJI,NAZWA
+FROM JEDNOSTKI_ORGANIZACYJNE;
+
+KOD_ORGANI NAZWA    
+---------- ----------
+2          Finansy   
+1          Kierowanie
+
+SQL> spool off
